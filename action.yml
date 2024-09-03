@@ -1,0 +1,27 @@
+name: "Set up OpenConnect connection"
+author: Luke Swanson
+description: "This action installs and runs OpenConnect to make a connection to a VPN endpoint."
+branding:
+  icon: 'download'
+  color: 'blue'
+inputs:
+  username:
+    description: "The username for making the connection."
+    required: true
+  password:
+    description: "The password for making the connection."
+    required: true
+  endpoint:
+    description: "The VPN endpoint to connect to."
+    required: true
+  protocol:
+    description: "The password for making the connection."
+    required: false
+    default: "gp"
+runs:
+  using: "composite"
+  steps:
+    - name: Install OpenConnect
+      run: sudo apt-get -q update && sudo apt-get -q install openconnect
+    - name: Connect VPN
+      run: echo ${{ inputs.password }} | sudo openconnect --protocol=${{ inputs.protocol }} -u ${{ inputs.username }} --passwd-on-stdin ${{ inputs.endpoint }} &
