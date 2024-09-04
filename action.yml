@@ -23,5 +23,7 @@ runs:
   steps:
     - name: Install OpenConnect
       run: sudo apt-get -q update && sudo apt-get -q install openconnect
+      shell: bash
     - name: Connect VPN
       run: echo ${{ inputs.password }} | sudo openconnect --protocol=${{ inputs.protocol }} -u ${{ inputs.username }} --passwd-on-stdin ${{ inputs.endpoint }} &
+      shell: bash
